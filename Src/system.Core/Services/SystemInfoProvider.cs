@@ -14,24 +14,29 @@ namespace System.Core.Services
     public class SystemInfoProvider : ISystemInfoProvider
     {
         private readonly ILogger<SystemInfoProvider> _logger;
-        private readonly IMemoryMatricsProvider _memoryMatricsProvider;
+        private readonly IMemoryMetricsProvider _memoryMatricsProvider;
+        private readonly ICpuMetricsProvider _cpuMetricsProvider;
 
         public SystemInfoProvider(ILogger<SystemInfoProvider> logger,
-            IMemoryMatricsProvider memoryMatricsProvider)
+            IMemoryMetricsProvider memoryMatricsProvider,
+            ICpuMetricsProvider cpuMetricsProvider)
         {
             _logger = logger;
             _memoryMatricsProvider = memoryMatricsProvider;
+            _cpuMetricsProvider = cpuMetricsProvider;
         }
 
         public async Task<SystemInfo> Get()
         {
             _logger.LogInformation("Getting system informations...");
 
-            var mm = await _memoryMatricsProvider.GetMemoryMetrics();
+            var mem = await _memoryMatricsProvider.GetMemoryMetrics();
+            var cpu = await _cpuMetricsProvider.GetCpuMetrics();
+
 
             return new SystemInfo(
-                new CpuUsageInfo(0),
-                new MemoryUsageInfo(mm.UsedPerc),
+                new CpuUsageInfo(cpu.UsedPerc),
+                new MemoryUsageInfo(mem.UsedPerc),
                 new DiskUsageInfo(0));
         }
     }

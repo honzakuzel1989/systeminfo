@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Core.Entities;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
@@ -9,19 +10,19 @@ using systeminfo.Core.Entities;
 
 namespace systeminfo.Core.Services.Unix
 {
-    public class UnixMemoryMetricsProvider : IMemoryMetricsProvider
+    public class UnixCpuMetricsProvider : ICpuMetricsProvider
     {
-        private readonly ILogger<UnixMemoryMetricsProvider> _logger;
+        private readonly ILogger<UnixCpuMetricsProvider> _logger;
 
-        public UnixMemoryMetricsProvider(ILogger<UnixMemoryMetricsProvider> logger)
+        public UnixCpuMetricsProvider(ILogger<UnixCpuMetricsProvider> logger)
         {
             _logger = logger;
         }
 
-        public async Task<MemoryMetrics> GetMemoryMetrics()
+        public async Task<CpuMetrics> GetCpuMetrics()
         {
             var output = "";
-            var cmd = "free -m";
+            var cmd = "top -b -d1 -n1|grep -i 'Cpu(s)'|xargs|cut -d ' ' -f2";
 
             var info = new ProcessStartInfo(cmd);
             info.FileName = "/bin/bash";
@@ -37,15 +38,10 @@ namespace systeminfo.Core.Services.Unix
                 _logger.LogInformation(output);
             }
 
-            var lines = output.Split("\n");
-            var memory = lines[1].Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            var used = Math.Round(double.Parse(output.Replace(',', '.'), CultureInfo.InvariantCulture));
 
-            var total = double.Parse(memory[1].Replace(',', '.'), CultureInfo.InvariantCulture);
-            var available = double.Parse(memory[6].Replace(',', '.'), CultureInfo.InvariantCulture);
-            var used = total - available;
-
-            var metrics = new MemoryMetrics(total, available, used);
-            _logger.LogInformation($"Memory metrics {metrics}");
+            var metrics = new CpuMetrics(new Percentage(used));
+            _logger.LogInformation($"Cpu metrics {metrics}");
 
             return metrics;
         }

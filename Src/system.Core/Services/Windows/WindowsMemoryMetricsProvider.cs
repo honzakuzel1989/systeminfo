@@ -8,7 +8,7 @@ using systeminfo.Core.Entities;
 
 namespace systeminfo.Core.Services.Windows
 {
-    public class WindowsMemoryMetricsProvider : IMemoryMatricsProvider
+    public class WindowsMemoryMetricsProvider : IMemoryMetricsProvider
     {
         private readonly ILogger<WindowsMemoryMetricsProvider> _logger;
 
@@ -42,7 +42,10 @@ namespace systeminfo.Core.Services.Windows
             var free = Math.Round(double.Parse(freeMemoryParts[1]) / 1024, 0);
             var used = total - free;
 
-            return new MemoryMetrics(total, free, used);
+            var metrics = new MemoryMetrics(total, free, used);
+            _logger.LogInformation($"Memory metrics {metrics}");
+
+            return metrics;
         }
     }
 }

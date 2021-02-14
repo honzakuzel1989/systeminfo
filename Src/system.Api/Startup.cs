@@ -34,11 +34,13 @@ namespace system
 
             if (IsUnix())
             {
-                services.AddTransient<IMemoryMatricsProvider, UnixMemoryMetricsProvider>();
+                services.AddTransient<IMemoryMetricsProvider, UnixMemoryMetricsProvider>();
+                services.AddTransient<ICpuMetricsProvider, UnixCpuMetricsProvider>();
             }
             else
             {
-                services.AddTransient<IMemoryMatricsProvider, WindowsMemoryMetricsProvider>();
+                services.AddTransient<IMemoryMetricsProvider, WindowsMemoryMetricsProvider>();
+                services.AddTransient<ICpuMetricsProvider, WindowsCpuMetricsProvider>();
             }
 
 

@@ -14,9 +14,9 @@
         public DiskUsageInfo DiskInfo { get; }
     }
 
-    public abstract class HwInfo
+    public abstract class UsageInfo
     {
-        protected HwInfo(Percentage usage)
+        protected UsageInfo(Percentage usage)
         {
             Usage = usage;
         }
@@ -24,21 +24,21 @@
         public Percentage Usage { get; }
     }
 
-    public class CpuUsageInfo : HwInfo
+    public class CpuUsageInfo : UsageInfo
     {
         public CpuUsageInfo(Percentage value) : base(value)
         {
         }
     }
 
-    public class MemoryUsageInfo : HwInfo
+    public class MemoryUsageInfo : UsageInfo
     {
         public MemoryUsageInfo(Percentage value) : base(value)
         {
         }
     }
 
-    public class DiskUsageInfo : HwInfo
+    public class DiskUsageInfo : UsageInfo
     {
         public DiskUsageInfo(Percentage value) : base(value)
         {

@@ -3,8 +3,8 @@ using systeminfo.Core.Entities;
 
 namespace systeminfo.Core.Services
 {
-    public interface IMemoryMatricsProvider
+    public interface ICpuMetricsProvider
     {
-        Task<MemoryMetrics> GetMemoryMetrics();
+        Task<CpuMetrics> GetCpuMetrics();
     }
 }
