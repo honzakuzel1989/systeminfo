@@ -34,16 +34,19 @@ namespace system
             services.AddTransient<ISystemInfoProvider, SystemInfoProvider>();
             services.AddTransient<ICpuUsageHeuristic, AverageCpuUsageHeuristic>();
             services.AddTransient<IMemoryUsageHeuristic, AverageMemoryUsageHeuristic>();
+            services.AddTransient<IDiskUsageHeuristic, AverageDiskUsageHeuristic>();
 
             if (IsUnix())
             {
                 services.AddTransient<IMemoryMetricsProvider, UnixMemoryMetricsProvider>();
                 services.AddTransient<ICpuMetricsProvider, UnixCpuMetricsProvider>();
+                services.AddTransient<IDiskMetricsProvider, UnixDiskMetricsProvider>();
             }
             else
             {
                 services.AddTransient<IMemoryMetricsProvider, WindowsMemoryMetricsProvider>();
                 services.AddTransient<ICpuMetricsProvider, WindowsCpuMetricsProvider>();
+                services.AddTransient<IDiskMetricsProvider, WindowsDiskMetricsProvider>();
             }
 
             services.AddMemoryCache();
