@@ -1,5 +1,5 @@
-﻿using System.Core.Entities;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using systeminfo.Core.Entities;
 
 namespace System.Core.Services
 {

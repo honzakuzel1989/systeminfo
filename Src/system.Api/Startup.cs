@@ -13,6 +13,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using systeminfo.Core.Services;
+using systeminfo.Core.Services.Heuristics;
 using systeminfo.Core.Services.Unix;
 using systeminfo.Core.Services.Windows;
 
@@ -31,6 +32,8 @@ namespace system
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ISystemInfoProvider, SystemInfoProvider>();
+            services.AddTransient<ICpuUsageHeuristic, AverageCpuUsageHeuristic>();
+            services.AddTransient<IMemoryUsageHeuristic, AverageMemoryUsageHeuristic>();
 
             if (IsUnix())
             {
@@ -43,7 +46,7 @@ namespace system
                 services.AddTransient<ICpuMetricsProvider, WindowsCpuMetricsProvider>();
             }
 
-
+            services.AddMemoryCache();
             services.AddControllers();
         }
 

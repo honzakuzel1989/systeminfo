@@ -1,4 +1,6 @@
-﻿namespace System.Core.Entities
+﻿using System;
+
+namespace systeminfo.Core.Entities
 {
     public class SystemInfo
     {
@@ -66,6 +68,11 @@
         public byte Value { get; }
 
         public static implicit operator Percentage(int x)
+        {
+            return new Percentage(x);
+        }
+
+        public static implicit operator Percentage(double x)
         {
             return new Percentage(x);
         }

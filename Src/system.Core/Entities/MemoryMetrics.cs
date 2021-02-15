@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Core.Entities;
-using System.Text;
-
-namespace systeminfo.Core.Entities
+﻿namespace systeminfo.Core.Entities
 {
     public class MemoryMetrics
     {
