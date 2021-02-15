@@ -41,12 +41,14 @@ namespace system
                 services.AddTransient<IMemoryMetricsProvider, UnixMemoryMetricsProvider>();
                 services.AddTransient<ICpuMetricsProvider, UnixCpuMetricsProvider>();
                 services.AddTransient<IDiskMetricsProvider, UnixDiskMetricsProvider>();
+                services.AddTransient<INetworkInfoProvider, UnixNetworkInfoProvider>();
             }
             else
             {
                 services.AddTransient<IMemoryMetricsProvider, WindowsMemoryMetricsProvider>();
                 services.AddTransient<ICpuMetricsProvider, WindowsCpuMetricsProvider>();
                 services.AddTransient<IDiskMetricsProvider, WindowsDiskMetricsProvider>();
+                services.AddTransient<INetworkInfoProvider, WindowsNetworkInfoProvider>();
             }
 
             services.AddMemoryCache();

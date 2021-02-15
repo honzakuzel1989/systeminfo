@@ -4,16 +4,35 @@ namespace systeminfo.Core.Entities
 {
     public class SystemInfo
     {
-        public SystemInfo(CpuUsageInfo cpuInfo, MemoryUsageInfo memoryInfo, DiskUsageInfo diskInfo)
+        public SystemInfo(CpuUsageInfo cpuInfo, MemoryUsageInfo memoryInfo, DiskUsageInfo diskInfo, NetworkInfo networkInfo)
         {
             CpuInfo = cpuInfo;
             MemoryInfo = memoryInfo;
             DiskInfo = diskInfo;
+            NetworkInfo = networkInfo;
         }
 
         public CpuUsageInfo CpuInfo { get; }
         public MemoryUsageInfo MemoryInfo { get; }
         public DiskUsageInfo DiskInfo { get; }
+        public NetworkInfo NetworkInfo { get; set; }
+    }
+
+    public class NetworkInfo
+    {
+        public NetworkInfo(string ipAddress, string @interface)
+        {
+            IpAddress = ipAddress;
+            Interface = @interface;
+        }
+
+        public string IpAddress { get; set; }
+        public string Interface { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Interface}: {IpAddress}";
+        }
     }
 
     public abstract class UsageInfo

@@ -37,6 +37,7 @@ namespace system.Controllers
                 CpuUsage = sysnfo.CpuInfo.Usage.Value,
                 MemUsage = sysnfo.MemoryInfo.Usage.Value,
                 DiskUsage = sysnfo.DiskInfo.Usage.Value,
+                NetworkInfo = sysnfo.NetworkInfo
             });
         }
     }
