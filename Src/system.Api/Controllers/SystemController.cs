@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Core.Services;
-using System.Linq;
 using System.Threading.Tasks;
+using systeminfo.Core.Services;
 
 namespace system.Controllers
 {
@@ -14,12 +13,21 @@ namespace system.Controllers
     {
         private readonly ILogger<SystemController> _logger;
         private readonly ISystemInfoProvider _systemInfoProvider;
+        private readonly IUsageInfoProvider _usageInfoProvider;
+        private readonly INetworkInfoProvider _networkInfoProvider;
+        private readonly IUpdatesInfoProvider _updatesInfoProvider;
 
         public SystemController(ILogger<SystemController> logger,
-            ISystemInfoProvider systemInfoProvider)
+            ISystemInfoProvider systemInfoProvider,
+            IUsageInfoProvider usageInfoProvider,
+            INetworkInfoProvider networkInfoProvider,
+            IUpdatesInfoProvider updatesInfoProvider)
         {
             _logger = logger;
             _systemInfoProvider = systemInfoProvider;
+            _usageInfoProvider = usageInfoProvider;
+            _networkInfoProvider = networkInfoProvider;
+            _updatesInfoProvider = updatesInfoProvider;
         }
 
         [HttpGet]
@@ -34,38 +42,38 @@ namespace system.Controllers
             var sysnfo = await _systemInfoProvider.Get();
             return new JsonResult(new 
             {
-                CpuUsage = sysnfo.CpuInfo.Usage.Value,
-                MemUsage = sysnfo.MemoryInfo.Usage.Value,
-                DiskUsage = sysnfo.DiskInfo.Usage.Value,
+                CpuUsage = sysnfo.UsageInfo.CpuInfo.Usage.Value,
+                MemUsage = sysnfo.UsageInfo.MemoryInfo.Usage.Value,
+                DiskUsage = sysnfo.UsageInfo.DiskInfo.Usage.Value,
                 NetworkInfo = sysnfo.NetworkInfo,
                 UpdatesInfo = sysnfo.UpdatesInfo
             });
         }
 
         [HttpGet("usage")]
-        public async Task<IActionResult> GetUsage()
+        public async Task<IActionResult> GetUsage(string fs)
         {
-            var sysnfo = await _systemInfoProvider.Get();
+            var usnfo = await _usageInfoProvider.GetUsageInfo(fs);
             return new JsonResult(new
             {
-                CpuUsage = sysnfo.CpuInfo.Usage.Value,
-                MemUsage = sysnfo.MemoryInfo.Usage.Value,
-                DiskUsage = sysnfo.DiskInfo.Usage.Value,
+                CpuUsage = usnfo.CpuInfo.Usage.Value,
+                MemUsage = usnfo.MemoryInfo.Usage.Value,
+                DiskUsage = usnfo.DiskInfo.Usage.Value,
             });
         }
 
         [HttpGet("network")]
-        public async Task<IActionResult> GetNetworkInfo()
+        public async Task<IActionResult> GetNetworkInfo(string iface)
         {
-            var sysnfo = await _systemInfoProvider.Get();
-            return new JsonResult(sysnfo.NetworkInfo);
+            var netinfo = await _networkInfoProvider.GetNetworkInfo(iface);
+            return new JsonResult(netinfo);
         }
 
         [HttpGet("updates")]
         public async Task<IActionResult> GetUpdatesInfo()
         {
-            var sysnfo = await _systemInfoProvider.Get();
-            return new JsonResult(sysnfo.UpdatesInfo);
+            var upinfo = await _updatesInfoProvider.GetUpdatesInfo();
+            return new JsonResult(upinfo);
         }
     }
 }

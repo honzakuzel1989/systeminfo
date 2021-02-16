@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using systeminfo.Core.Entities;
 
-namespace System.Core.Services
+namespace systeminfo.Core.Services
 {
     public interface ISystemInfoProvider
     {

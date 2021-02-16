@@ -4,20 +4,16 @@ namespace systeminfo.Core.Entities
 {
     public class SystemInfo
     {
-        public SystemInfo(CpuUsageInfo cpuInfo, MemoryUsageInfo memoryInfo, DiskUsageInfo diskInfo, NetworkInfo networkInfo, UpdatesInfo updatesInfo)
+        public SystemInfo(UsageInfo usageInfo, NetworkInfo networkInfo, UpdatesInfo updatesInfo)
         {
-            CpuInfo = cpuInfo;
-            MemoryInfo = memoryInfo;
-            DiskInfo = diskInfo;
+            UsageInfo = usageInfo;
             NetworkInfo = networkInfo;
             UpdatesInfo = updatesInfo;
         }
-
-        public CpuUsageInfo CpuInfo { get; }
-        public MemoryUsageInfo MemoryInfo { get; }
-        public DiskUsageInfo DiskInfo { get; }
+        
         public NetworkInfo NetworkInfo { get; }
         public UpdatesInfo UpdatesInfo { get; }
+        public UsageInfo UsageInfo { get; set; }
     }
 
     public class NetworkInfo
@@ -37,35 +33,48 @@ namespace systeminfo.Core.Entities
         }
     }
 
-    public abstract class UsageInfo
+    public class UsageInfo
     {
-        protected UsageInfo(Percentage usage)
+        public UsageInfo(CpuUsageInfo cpuInfo, MemoryUsageInfo memoryInfo, DiskUsageInfo diskInfo)
         {
-            Usage = usage;
+            CpuInfo = cpuInfo;
+            MemoryInfo = memoryInfo;
+            DiskInfo = diskInfo;
+        }
+
+        public CpuUsageInfo CpuInfo { get; }
+        public MemoryUsageInfo MemoryInfo { get; }
+        public DiskUsageInfo DiskInfo { get; }
+    }
+
+    public class CpuUsageInfo
+    {
+        public CpuUsageInfo(Percentage value)
+        {
+            Usage = value;
         }
 
         public Percentage Usage { get; }
     }
 
-    public class CpuUsageInfo : UsageInfo
+    public class MemoryUsageInfo
     {
-        public CpuUsageInfo(Percentage value) : base(value)
+        public MemoryUsageInfo(Percentage value)
         {
+            Usage = value;
         }
+
+        public Percentage Usage { get; }
     }
 
-    public class MemoryUsageInfo : UsageInfo
+    public class DiskUsageInfo
     {
-        public MemoryUsageInfo(Percentage value) : base(value)
+        public DiskUsageInfo(Percentage value)
         {
+            Usage = value;
         }
-    }
 
-    public class DiskUsageInfo : UsageInfo
-    {
-        public DiskUsageInfo(Percentage value) : base(value)
-        {
-        }
+        public Percentage Usage { get; }
     }
 
     public class Percentage

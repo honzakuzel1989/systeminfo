@@ -42,5 +42,10 @@ namespace systeminfo.Core.Entities
         {
             return new DiskSize(size);
         }
+
+        public override string ToString()
+        {
+            return $"{GiB}G";
+        }
     }
 }

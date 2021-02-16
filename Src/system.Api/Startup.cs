@@ -1,17 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Core.Services;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using systeminfo.Core.Services;
 using systeminfo.Core.Services.Heuristics;
 using systeminfo.Core.Services.Unix;
@@ -32,6 +25,7 @@ namespace system
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ISystemInfoProvider, SystemInfoProvider>();
+            services.AddTransient<IUsageInfoProvider, UsageInfoProvider>();
             services.AddTransient<ICpuUsageHeuristic, AverageCpuUsageHeuristic>();
             services.AddTransient<IMemoryUsageHeuristic, AverageMemoryUsageHeuristic>();
             services.AddTransient<IDiskUsageHeuristic, AverageDiskUsageHeuristic>();
