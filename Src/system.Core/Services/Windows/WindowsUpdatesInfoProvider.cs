@@ -1,11 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using System.Diagnostics;
-using System.Globalization;
 using System.Threading.Tasks;
 using systeminfo.Core.Entities;
 
-namespace systeminfo.Core.Services.Unix
+namespace systeminfo.Core.Services.Windows
 {
     public class WindowsUpdatesInfoProvider : IUpdatesInfoProvider
     {
