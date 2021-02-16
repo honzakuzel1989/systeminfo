@@ -23,6 +23,7 @@ namespace System.Core.Services
         private readonly IDiskMetricsProvider _diskMetricsProvider;
         private readonly IDiskUsageHeuristic _diskUsageHeuristic;
         private readonly INetworkInfoProvider _networkInfoProvider;
+        private readonly IUpdatesInfoProvider _updatesInfoProvider;
         private readonly IMemoryCache _memoryCache;
 
         public SystemInfoProvider(ILogger<SystemInfoProvider> logger,
@@ -33,6 +34,7 @@ namespace System.Core.Services
             IDiskMetricsProvider diskMetricsProvider,
             IDiskUsageHeuristic diskUsageHeuristic,
             INetworkInfoProvider networkInfoProvider,
+            IUpdatesInfoProvider updatesInfoProvider,
             IMemoryCache memoryCache)
         {
             _logger = logger;
@@ -43,6 +45,7 @@ namespace System.Core.Services
             _diskMetricsProvider = diskMetricsProvider;
             _diskUsageHeuristic = diskUsageHeuristic;
             _networkInfoProvider = networkInfoProvider;
+            _updatesInfoProvider = updatesInfoProvider;
             _memoryCache = memoryCache;
         }
 
@@ -68,12 +71,14 @@ namespace System.Core.Services
                 ?? INTERFACE_DEFAULT;
 
             var network = await _networkInfoProvider.GetNetworkInfo(iface);
+            var packages = await _updatesInfoProvider.GetUpdatesInfo();
 
             return new SystemInfo(
                 _cpuUsageHeuristic.GetUsageInfo(lcpu, cpu),
                 _memoryUsageHeuristic.GetUsageInfo(lmem, mem),
                 _diskUsageHeuristic.GetUsageInfo(disk),
-                network);
+                network,
+                packages);
         }
     }
 }

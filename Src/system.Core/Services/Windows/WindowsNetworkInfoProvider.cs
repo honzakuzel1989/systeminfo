@@ -9,9 +9,9 @@ namespace systeminfo.Core.Services.Unix
 {
     public class WindowsNetworkInfoProvider : INetworkInfoProvider
     {
-        private readonly ILogger<UnixCpuMetricsProvider> _logger;
+        private readonly ILogger<WindowsNetworkInfoProvider> _logger;
 
-        public WindowsNetworkInfoProvider(ILogger<UnixCpuMetricsProvider> logger)
+        public WindowsNetworkInfoProvider(ILogger<WindowsNetworkInfoProvider> logger)
         {
             _logger = logger;
         }

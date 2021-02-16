@@ -42,6 +42,7 @@ namespace system
                 services.AddTransient<ICpuMetricsProvider, UnixCpuMetricsProvider>();
                 services.AddTransient<IDiskMetricsProvider, UnixDiskMetricsProvider>();
                 services.AddTransient<INetworkInfoProvider, UnixNetworkInfoProvider>();
+                services.AddTransient<IUpdatesInfoProvider, UnixUpdatesInfoProvider>();
             }
             else
             {
@@ -49,6 +50,7 @@ namespace system
                 services.AddTransient<ICpuMetricsProvider, WindowsCpuMetricsProvider>();
                 services.AddTransient<IDiskMetricsProvider, WindowsDiskMetricsProvider>();
                 services.AddTransient<INetworkInfoProvider, WindowsNetworkInfoProvider>();
+                services.AddTransient<IUpdatesInfoProvider, WindowsUpdatesInfoProvider>();
             }
 
             services.AddMemoryCache();

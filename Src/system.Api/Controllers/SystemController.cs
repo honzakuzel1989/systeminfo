@@ -37,8 +37,35 @@ namespace system.Controllers
                 CpuUsage = sysnfo.CpuInfo.Usage.Value,
                 MemUsage = sysnfo.MemoryInfo.Usage.Value,
                 DiskUsage = sysnfo.DiskInfo.Usage.Value,
-                NetworkInfo = sysnfo.NetworkInfo
+                NetworkInfo = sysnfo.NetworkInfo,
+                UpdatesInfo = sysnfo.UpdatesInfo
             });
+        }
+
+        [HttpGet("usage")]
+        public async Task<IActionResult> GetUsage()
+        {
+            var sysnfo = await _systemInfoProvider.Get();
+            return new JsonResult(new
+            {
+                CpuUsage = sysnfo.CpuInfo.Usage.Value,
+                MemUsage = sysnfo.MemoryInfo.Usage.Value,
+                DiskUsage = sysnfo.DiskInfo.Usage.Value,
+            });
+        }
+
+        [HttpGet("network")]
+        public async Task<IActionResult> GetNetworkInfo()
+        {
+            var sysnfo = await _systemInfoProvider.Get();
+            return new JsonResult(sysnfo.NetworkInfo);
+        }
+
+        [HttpGet("updates")]
+        public async Task<IActionResult> GetUpdatesInfo()
+        {
+            var sysnfo = await _systemInfoProvider.Get();
+            return new JsonResult(sysnfo.UpdatesInfo);
         }
     }
 }

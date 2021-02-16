@@ -4,18 +4,20 @@ namespace systeminfo.Core.Entities
 {
     public class SystemInfo
     {
-        public SystemInfo(CpuUsageInfo cpuInfo, MemoryUsageInfo memoryInfo, DiskUsageInfo diskInfo, NetworkInfo networkInfo)
+        public SystemInfo(CpuUsageInfo cpuInfo, MemoryUsageInfo memoryInfo, DiskUsageInfo diskInfo, NetworkInfo networkInfo, UpdatesInfo updatesInfo)
         {
             CpuInfo = cpuInfo;
             MemoryInfo = memoryInfo;
             DiskInfo = diskInfo;
             NetworkInfo = networkInfo;
+            UpdatesInfo = updatesInfo;
         }
 
         public CpuUsageInfo CpuInfo { get; }
         public MemoryUsageInfo MemoryInfo { get; }
         public DiskUsageInfo DiskInfo { get; }
-        public NetworkInfo NetworkInfo { get; set; }
+        public NetworkInfo NetworkInfo { get; }
+        public UpdatesInfo UpdatesInfo { get; }
     }
 
     public class NetworkInfo
